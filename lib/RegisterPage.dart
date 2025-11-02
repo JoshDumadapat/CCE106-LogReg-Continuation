@@ -171,6 +171,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         civilstatusController.text,
                         birthdateController.text,
                       );
+
+                      if (!isError) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginForm(),
+                          ),
+                        );
+                      }
                     },
                     child: Text('REGISTER', style: txtstyle2),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_reg_stateful_act/RegisterPage.dart';
+import 'package:login_reg_stateful_act/HomePage.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -13,29 +14,31 @@ class _LoginFormState extends State<LoginForm> {
   TextEditingController passwordController = TextEditingController();
   late String errormessage;
   late bool isError;
+
   @override
   void initState() {
-    errormessage = "This is an error message.";
+    errormessage = "";
     isError = false;
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void checkLogin(username, password) {
     setState(() {
-      if (username == "") {
+      if (username.isEmpty) {
         errormessage = "Please input your username!";
         isError = true;
-      } else if (password == "") {
+      } else if (password.isEmpty) {
         errormessage = "Please input your password!";
         isError = true;
       } else {
         errormessage = "";
         isError = false;
+
+        // ✅ If login is successful, go to HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
       }
     });
   }
@@ -50,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('LOGIN FORM', style: txtstyle),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               TextField(
                 controller: usernameController,
                 decoration: const InputDecoration(
@@ -69,29 +72,33 @@ class _LoginFormState extends State<LoginForm> {
                   prefixIcon: Icon(Icons.password),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: () {
-                  checkLogin(usernameController.text, passwordController.text);
+                  checkLogin(
+                      usernameController.text, passwordController.text);
                 },
                 child: Text('LOGIN', style: txtstyle2),
               ),
-              SizedBox(height: 15),
-              (isError)
-                  ? Text(errormessage, style: errortxtstyle)
-                  : Container(),
+              const SizedBox(height: 15),
+              if (isError)
+                Text(errormessage, style: errortxtstyle),
+              const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
+                  // ✅ Navigate to RegisterPage
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterPage(),
+                    ),
                   );
                 },
-                child: Text('REGISTER PAGE', style: registertxtstyle),
+                child: Text('Create an Account', style: registertxtstyle),
               ),
             ],
           ),
@@ -101,6 +108,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
+// Text Styles
 var txtstyle = const TextStyle(
   fontWeight: FontWeight.bold,
   letterSpacing: 2,
