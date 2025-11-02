@@ -34,7 +34,6 @@ class _LoginFormState extends State<LoginForm> {
         errormessage = "";
         isError = false;
 
-        // ✅ If login is successful, go to HomePage
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
@@ -90,7 +89,6 @@ class _LoginFormState extends State<LoginForm> {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  // ✅ Navigate to RegisterPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(
