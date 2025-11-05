@@ -9,58 +9,44 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController changepasswordController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  TextEditingController civilstatusController = TextEditingController();
-  TextEditingController birthdateController = TextEditingController();
+
   late String errormessage;
   late bool isError;
 
   @override
   void initState() {
-    errormessage = "This is an Error";
+    errormessage = "";
     isError = false;
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void checkRegister(
-    name,
     username,
+    email,
+    age,
+    phone,
     password,
-    changepassword,
-    gender,
-    civilstatus,
-    birthdate,
   ) {
     setState(() {
-      if (name == "") {
-        errormessage = "Please input your name!";
-        isError = true;
-      } else if (username == "") {
+      if (username == "") {
         errormessage = "Please input your username!";
+        isError = true;
+      } else if (email == "") {
+        errormessage = "Please input your email!";
+        isError = true;
+      } else if (age == "") {
+        errormessage = "Please input your age!";
+        isError = true;
+      } else if (phone == "") {
+        errormessage = "Please input your phone number!";
         isError = true;
       } else if (password == "") {
         errormessage = "Please input your password!";
-        isError = true;
-      } else if (changepassword == "") {
-        errormessage = "Please input your new password!";
-        isError = true;
-      } else if (gender == "") {
-        errormessage = "Please input your gender!";
-        isError = true;
-      } else if (civilstatus == "") {
-        errormessage = "Please input your civil status!";
-        isError = true;
-      } else if (birthdate == "") {
-        errormessage = "Please input your birth date!";
         isError = true;
       } else {
         errormessage = "";
@@ -72,125 +58,231 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         leading: IconButton(
+          color: Colors.black,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginForm(),
+              ),
+            );
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('REGISTER', style: txtstyle),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter name',
-                      prefixIcon: Icon(Icons.account_box),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter username',
-                      prefixIcon: Icon(Icons.people),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    obscureText: true,
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter password',
-                      prefixIcon: Icon(Icons.password),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    obscureText: true,
-                    controller: changepasswordController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Change password',
-                      prefixIcon: Icon(Icons.password),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: genderController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter gender',
-                      prefixIcon: Icon(Icons.male),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: civilstatusController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter civil status',
-                      prefixIcon: Icon(Icons.social_distance),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: birthdateController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter birth date',
-                      prefixIcon: Icon(Icons.date_range),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Colors.blue,
-                    ),
-                    onPressed: () {
-                      checkRegister(
-                        nameController.text,
-                        usernameController.text,
-                        passwordController.text,
-                        changepasswordController.text,
-                        genderController.text,
-                        civilstatusController.text,
-                        birthdateController.text,
-                      );
-
-                      if (!isError) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginForm(),
-                          ),
-                        );
-                      }
-                    },
-                    child: Text('REGISTER', style: txtstyle2),
-                  ),
-                  const SizedBox(height: 15),
-                  (isError)
-                      ? Text(errormessage, style: errortxtstyle)
-                      : Container(),
-                ],
-              ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  kToolbarHeight,
             ),
-          ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/nike.png',
+                  height: 50,
+                ),
+                const SizedBox(height: 60),
+
+                const Text(
+                  'Register Page',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 5),
+
+                const Text(
+                  'Register now and shop with us.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    prefixIcon: const Icon(Icons.person),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    prefixIcon: const Icon(Icons.email),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                TextField(
+                  controller: ageController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Age',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    prefixIcon: const Icon(Icons.calendar_today),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                TextField(
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    prefixIcon: const Icon(Icons.phone),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    prefixIcon: const Icon(Icons.lock),
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 46, 48, 49),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                  onPressed: () {
+                    checkRegister(
+                      usernameController.text,
+                      emailController.text,
+                      ageController.text,
+                      phoneController.text,
+                      passwordController.text,
+                    );
+
+                    if (!isError) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginForm(),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 15),
+
+                if (isError)
+                  Text(
+                    errormessage,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+
+                const SizedBox(height: 15),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginForm(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Already have an account? Back to Login",
+                    style: TextStyle(
+                      color: Colors.black,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

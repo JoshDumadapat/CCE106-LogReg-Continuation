@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => Homepage()),
         );
       }
     });
@@ -45,58 +45,130 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 25),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('LOGIN FORM', style: txtstyle),
-              const SizedBox(height: 15),
+              Image.asset(
+                'assets/nike.png',
+                height: 50,
+              ),
+              const SizedBox(height: 50),
+
+              const Text(
+                'Login Now',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 5),
+
+              const Text(
+                'Just Do It — Sign in to your Nike account',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 30),
+
               TextField(
                 controller: usernameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter Username',
-                  prefixIcon: Icon(Icons.person),
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  prefixIcon: const Icon(Icons.person),
                 ),
               ),
               const SizedBox(height: 15),
+
               TextField(
-                obscureText: true,
                 controller: passwordController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter Password',
-                  prefixIcon: Icon(Icons.password),
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  prefixIcon: const Icon(Icons.lock),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 25),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 46, 48, 49),
+                  foregroundColor: Colors.white,
                   minimumSize: const Size.fromHeight(50),
-                  backgroundColor: Colors.blue,
                 ),
                 onPressed: () {
                   checkLogin(
-                      usernameController.text, passwordController.text);
+                    usernameController.text,
+                    passwordController.text,
+                  );
                 },
-                child: Text('LOGIN', style: txtstyle2),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const SizedBox(height: 15),
+
               if (isError)
-                Text(errormessage, style: errortxtstyle),
+                Text(
+                  errormessage,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               const SizedBox(height: 15),
+
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const RegisterPage(),
                     ),
                   );
                 },
-                child: Text('Create an Account', style: registertxtstyle),
+                child: const Text(
+                  "Don't have an account? Register",
+                  style: TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           ),
@@ -105,30 +177,3 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
-
-// Text Styles
-var txtstyle = const TextStyle(
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontSize: 38,
-);
-
-var registertxtstyle = const TextStyle(
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontSize: 18,
-);
-
-var errortxtstyle = const TextStyle(
-  fontWeight: FontWeight.bold,
-  letterSpacing: 1,
-  fontSize: 14,
-  color: Colors.red,
-);
-
-var txtstyle2 = const TextStyle(
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontSize: 24,
-  color: Colors.white,
-);
